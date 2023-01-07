@@ -17,9 +17,11 @@ For assistance:
 Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
+const num = 9;
+
 function showPage(list, page) {
-   const start = (page*9) - 9;
-   const end = page*9;
+   const start = (page*num) - num;
+   const end = page*num;
    const ul = document.querySelector('.student-list');
    ul.innerHTML = '';
    for (let i in list) {
@@ -40,13 +42,33 @@ function showPage(list, page) {
    }
    
 }
-showPage(data,1);
-
 /*
 Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
-
-
+function addPagination (list) {
+   const numPages = Math.floor(list.length/num + 1);
+   const ul = document.querySelector('.link-list');
+   ul.innerHTML = '';
+   let buttons = '';
+   for (let j = 1; j < numPages; j++) {
+      buttons += `<li><button type="button">${j}</button></li>`;
+   }
+   ul.insertAdjacentHTML('beforeend', buttons);
+   const firstButton = document.querySelector('button');
+   firstButton.className = 'active';
+   ul.addEventListener('click', (e) => {
+      if (e.target.tagName === 'BUTTON') {
+         const buttons = document.querySelectorAll('button');
+         for (let button of buttons) {
+            button.className = '';
+         }
+         e.target.className = 'active';
+         showPage(list, e.target.textContent);
+      }
+   });
+}
 
 // Call functions
+showPage(data,1);
+addPagination(data);
