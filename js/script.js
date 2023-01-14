@@ -72,3 +72,43 @@ function addPagination (list) {
 // Call functions
 showPage(data,1);
 addPagination(data);
+
+// Search function
+
+/* Variables to reference the `input` and search `button` elements */
+
+const searchField = document.querySelector('#search');
+const searchButton = document.querySelector('#search-button');
+
+function searcher (searchInput, list) {
+   let searchList = [];
+   for (let i in list) {
+     if (searchInput.value.length !== 0 && (list[i]['name']['first'].toLowerCase().includes(searchInput.value.toLowerCase()) || list[i]['name']['last'].toLowerCase().includes(searchInput.value.toLowerCase()))) {
+       searchList.push(list[i]);
+       showPage(searchList,1);
+       addPagination(searchList);
+     }
+   }
+   
+ }
+
+ /* submit listener */
+searchButton.addEventListener('click', (event) => {
+   event.preventDefault();
+ 
+   // Invoke your search function here - Arguments: search, tableCells
+ searcher(searchField, data);
+ 
+   // Helpful log statement to test function
+   console.log('Submit button is functional!');
+ });
+ 
+ /* submit listener */
+ searchField.addEventListener('keyup', () => {
+ 
+   // Invoke your search function here - Arguments: search, tableCells
+ searcher(searchField, data);
+ 
+   // Helpful log statement to test function
+   console.log('Keyup event on the Search input is functional!');
+ });
