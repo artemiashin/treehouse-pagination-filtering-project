@@ -87,6 +87,9 @@ function searcher (searchInput, list) {
        searchList.push(list[i]);
        showPage(searchList,1);
        addPagination(searchList);
+     } else if (searchInput.value.length === 0){
+      showPage(data,1);
+      addPagination(data);
      }
    }
    
