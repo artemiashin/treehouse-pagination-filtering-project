@@ -65,20 +65,26 @@ This function will create and insert/append the elements needed for the paginati
 function addPagination (list) {
    // Get the number of pages needed based on the list length and number of items per page
    const numPages = Math.floor(list.length/num + 1);
+   
    // Get the element to hold the pagination buttons
    const ul = document.querySelector('.link-list');
+   
    // Clear any existing buttons
    ul.innerHTML = '';
    let buttons = '';
+   
    // Loop through and create the pagination buttons
    for (let j = 1; j <= numPages; j++) {
       buttons += `<li><button type="button">${j}</button></li>`;
    }
+   
    // Add the buttons to the page
    ul.insertAdjacentHTML('beforeend', buttons);
+   
    // Set the first button as active
-   const firstButton = document.querySelector('button');
-   firstButton.className = 'active';
+   const firstButton = document.querySelector('.link-list button');
+   firstButton.classList.add('active');
+
    // Add an event listener to handle button clicks
    ul.addEventListener('click', (e) => {
       if (e.target.tagName === 'BUTTON') {
@@ -98,54 +104,3 @@ function addPagination (list) {
 // Call functions
 showPage(data,1);
 addPagination(data);
-
-// Search function
-
-/* Variables to reference the `input` and search `button` elements */
-
-const searchField = document.querySelector('#search');
-const searchButton = document.querySelector('#search-button');
-
-function searcher (searchInput, list) {
-   // Initialize an empty array to hold the matching items
-   let searchList = [];
-   
-   // Check if the search input is not empty
-   if (searchInput.value.length !== 0) {
-     // Loop through the list and check for matches
-     for (let i in list) {
-       if (list[i]['name']['first'].toLowerCase().includes(searchInput.value.toLowerCase()) || list[i]['name']['last'].toLowerCase().includes(searchInput.value.toLowerCase())) {
-         searchList.push(list[i]);
-       }
-     }
-     // Show the matching items and create pagination buttons
-     showPage(searchList,1);
-     addPagination(searchList);
-   } else {
-     // If the search input is empty, show the original list and create pagination buttons
-     showPage(data,1);
-     addPagination(data);
-   }
- }
- 
-
- /* submit listener */
-searchButton.addEventListener('click', (event) => {
-   event.preventDefault();
- 
-   // Invoke your search function here - Arguments: search, tableCells
- searcher(searchField, data);
- 
-   // Helpful log statement to test function
-   console.log('Submit button is functional!');
- });
- 
- /* submit listener */
- searchField.addEventListener('keyup', () => {
- 
-   // Invoke your search function here - Arguments: search, tableCells
- searcher(searchField, data);
- 
-   // Helpful log statement to test function
-   console.log('Keyup event on the Search input is functional!');
- });
